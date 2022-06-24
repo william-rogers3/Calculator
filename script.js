@@ -32,28 +32,62 @@ function operate(num1, num2, operator) {
         let finalNum = divide(num1, num2);
         return finalNum;
     }
-} 
-
-function updateDisplay(displayNum) {
-    const display = document.getElementById("current-num"); 
-    currentNum = parseFloat(displayNum);
-    display.textContent = `${currentNum}`;
-    
 }
 
+function updateDisplay(displayNum) {
+    const display = document.getElementById("current-num");
+    if (displayNum === "+" || displayNum === "/" ||
+        displayNum === "*" || displayNum === "-") {
+
+        console.log(displayNum);
+        display.textContent = displayNum;
+
+    } else if (typeof(displayNum) === "number") {
+        display.textContent = `${displayNum}`;
+    } else {
+        currentNum = parseFloat(displayNum);
+        display.textContent = `${currentNum}`;
+    }
+}
+
+
+let firstNumber = null;
 var currentNum = 0;
+var finalNum = 0;
+let operatorSelection = null;
 
 let button = document.getElementsByClassName("button");
 for (let i = 0; i < button.length; i++) {
     button[i].addEventListener("click", () => {
         if (button[i].value === "clear") {
             currentNum = 0;
+            finalNum = 0;
+            firstNumber = null;
+            updateDisplay(currentNum);
+        } else if (button[i].classList.contains("operators")) {
+            if (button[i].value === "=") {
+                if (firstNumber === null || operatorSelection === null) {
+                    return;
+                } else {
+                    console.log(`first num: ${firstNumber}, second num: ${currentNum}, op: ${operatorSelection}`);
+                    currentNum = operate(firstNumber, currentNum, operatorSelection);
+                    console.log(`current: ${currentNum}`)
+                    console.log(typeof(currentNum));
+                    updateDisplay(currentNum);
+                }
+            }
+            console.log(`button value of operator: ${[i].value}`);
+            updateDisplay(button[i].value);
+            firstNumber = currentNum;
+            currentNum = 0;
+            operatorSelection = button[i].value;
+
+        } else {
+            console.log(button[i].value);
+            currentNum += button[i].value;
+            updateDisplay(currentNum);
         }
-        console.log(button[i].value);
-        currentNum += button[i].value;
-        updateDisplay(currentNum);
+
     });
+
 }
-
-
-
