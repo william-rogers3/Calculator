@@ -32,18 +32,28 @@ function operate(num1, num2, operator) {
         let finalNum = divide(num1, num2);
         return finalNum;
     }
+} 
+
+function updateDisplay(displayNum) {
+    const display = document.getElementById("current-num"); 
+    currentNum = parseFloat(displayNum);
+    display.textContent = `${currentNum}`;
+    
 }
 
-
+var currentNum = 0;
 
 let button = document.getElementsByClassName("button");
 for (let i = 0; i < button.length; i++) {
     button[i].addEventListener("click", () => {
-        console.log(button[i].value)
-        return button[i].nodeValue;
+        if (button[i].value === "clear") {
+            currentNum = 0;
+        }
+        console.log(button[i].value);
+        currentNum += button[i].value;
+        updateDisplay(currentNum);
     });
 }
 
-let currentNum = 0;
 
-console.log(operate(2, 1.5, "*"))
+
