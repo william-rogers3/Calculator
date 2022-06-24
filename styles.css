@@ -26,7 +26,7 @@
 
 #current-num {
     margin-right: 5px;
-    font-family:'Courier New', Courier, monospace;
+    font-family: 'Courier New', Courier, monospace;
 }
 
 #calc-display {
@@ -36,7 +36,7 @@
     display: flex;
     flex-direction: row-reverse;
     align-items: center;
-    margin: 10px 0;
+    margin: 10px 0 20px 0;
 }
 
 .buttons {
@@ -75,4 +75,16 @@
 
 .misc {
     background-color: #e22fca;
+}
+
+.button:active.numbers {
+    background-color: #FFC3FF;
+}
+
+.button:active.misc {
+    background-color: #FFC3FF;
+}
+
+.button:active#equal {
+    background-color: #D183E8;
 }

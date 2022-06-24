@@ -43,7 +43,6 @@ function updateDisplay(displayNum) {
         display.textContent = displayNum;
 
     } else if (typeof (displayNum) === "number") {
-        console.log("trying");
         console.log(displayNum)
         display.textContent = `${displayNum}`;
     } else {
@@ -55,15 +54,19 @@ function updateDisplay(displayNum) {
 
 let firstNumber = null;
 var currentNum = 0;
-var finalNum = 0;
 let operatorSelection = null;
 
 let button = document.getElementsByClassName("button");
+let operators = document.getElementsByClassName("operators");
+
 for (let i = 0; i < button.length; i++) {
     button[i].addEventListener("click", () => {
+        for (let i = 0; i < operators.length; i++) {
+            operators[i].style.backgroundColor = "#84369b";
+        }
+
         if (button[i].value === "clear") {
             currentNum = 0;
-            finalNum = 0;
             firstNumber = null;
             updateDisplay(currentNum);
         } else if (button[i].classList.contains("operators")) {
@@ -73,18 +76,16 @@ for (let i = 0; i < button.length; i++) {
                 } else {
                     console.log(`first num: ${firstNumber}, second num: ${currentNum}, op: ${operatorSelection}`);
                     currentNum = operate(firstNumber, currentNum, operatorSelection);
-                    console.log(`current: ${currentNum}`)
-                    console.log(typeof (currentNum));
-
                     updateDisplay(currentNum);
 
                 }
             } else {
                 console.log(`button value of operator: ${button[i].value}`);
-                updateDisplay(button[i].value);
+                button[i].style.backgroundColor = "#D183E8";
                 firstNumber = currentNum;
                 currentNum = 0;
                 operatorSelection = button[i].value;
+
             }
 
         } else {
