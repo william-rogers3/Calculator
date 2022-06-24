@@ -24,6 +24,11 @@
     background-color: #b2b9b7;
 }
 
+#current-num {
+    margin-right: 5px;
+    font-family:'Courier New', Courier, monospace;
+}
+
 #calc-display {
     width: 250px;
     height: 60px;

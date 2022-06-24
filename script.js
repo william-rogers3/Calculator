@@ -42,7 +42,9 @@ function updateDisplay(displayNum) {
         console.log(displayNum);
         display.textContent = displayNum;
 
-    } else if (typeof(displayNum) === "number") {
+    } else if (typeof (displayNum) === "number") {
+        console.log("trying");
+        console.log(displayNum)
         display.textContent = `${displayNum}`;
     } else {
         currentNum = parseFloat(displayNum);
@@ -72,15 +74,18 @@ for (let i = 0; i < button.length; i++) {
                     console.log(`first num: ${firstNumber}, second num: ${currentNum}, op: ${operatorSelection}`);
                     currentNum = operate(firstNumber, currentNum, operatorSelection);
                     console.log(`current: ${currentNum}`)
-                    console.log(typeof(currentNum));
+                    console.log(typeof (currentNum));
+
                     updateDisplay(currentNum);
+
                 }
+            } else {
+                console.log(`button value of operator: ${button[i].value}`);
+                updateDisplay(button[i].value);
+                firstNumber = currentNum;
+                currentNum = 0;
+                operatorSelection = button[i].value;
             }
-            console.log(`button value of operator: ${[i].value}`);
-            updateDisplay(button[i].value);
-            firstNumber = currentNum;
-            currentNum = 0;
-            operatorSelection = button[i].value;
 
         } else {
             console.log(button[i].value);
