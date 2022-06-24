@@ -7,37 +7,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculator</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
 </head>
 
 <body>
     <div id="calculator">
-        
-        <div id="calc-display"></div>
-        <ul>
+        <h1>Calculator</h1>
+        <div id="calculator-border">
+            <div id="calc-display">
+                <p id="current-num">0<p>
+            </div>
             <div class="buttons">
-                <li id="clear" class="button">AC</li>
-                <li id="signs" class="button">+/-</li>
-                <li id="percent" class="button">%</li>
-                <li id="divide" class="button">/</li>
-                <li id="seven" class="button">7</li>
-                <li id="eight" class="button">8</li>
-                <li id="nine" class="button">9</li>
-                <li id="multiplication" class="button">*</li>
-                <li id="four" class="button">4</li>
-                <li id="five" class="button">5</li>
-                <li id="six" class="button">6</li>
-                <li id="subtraction" class="button">-</li>
-                <li id="one" class="button">1</li>
-                <li id="two" class="button">2</li>
-                <li id="three" class="button">3</li>
-                <li id="addition" class="button">+</li>
-                <li id="zero" class="button">0</li>
-                <li id="decimal" class="button">.</li>
-                <li id="eqaul" class="button">=</li>
-        </ul>
-    </div>
-
+                <button id="clear" class="button misc" value="clear">AC</button>
+                <button id="signs" class="button misc" value="sign">+/-</button>
+                <button id="percent" class="button misc" value="percent">%</button>
+                <button id="divide" class="button operators" value="divide">/</button>
+                <button id="seven" class="button numbers" value="7">7</button>
+                <button id="eight" class="button numbers" value="8">8</button>
+                <button id="nine" class="button numbers" value="9">9</button>
+                <button id="multiplication" class="button operators" value="multiply">*</button>
+                <button id="four" class="button numbers" value="4">4</button>
+                <button id="five" class="button numbers" value="5">5</button>
+                <button id="six" class="button numbers" value="6">6</button>
+                <button id="subtraction" class="button operators" value="minus">-</button>
+                <button id="one" class="button numbers" value="1">1</button>
+                <button id="two" class="button numbers" value="2">2</button>
+                <button id="three" class="button numbers" value="3">3</button>
+                <button id="addition" class="button operators" value="add">+</button>
+                <button id="zero" class="button numbers " value="0">0</button>
+                <button id="decimal" class="button numbers" value="decimal">.</button>
+                <button id="eqaul" class="button operators" value="equals">=</button>
+            </div>
+        </div>
     </div>
 </body>
 
