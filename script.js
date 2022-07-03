@@ -1,50 +1,27 @@
-function add(num1, num2) {
-    let sum = num1 + num2;
-    return sum;
-}
-
-function subtract(num1, num2) {
-    let difference = num1 - num2;
-    return difference;
-}
-
-function multiply(num1, num2) {
-    let product = num1 * num2;
-    return product;
-}
-
-function divide(num1, num2) {
-    let quotient = num1 / num2;
-    return quotient;
-}
-
 function operate(num1, num2, operator) {
     if (operator === "+") {
-        let finalNum = add(num1, num2);
-        return finalNum;
+        return num1 + num2;
     } else if (operator === "-") {
-        let finalNum = subtract(num1, num2);
-        return finalNum;
+        return num1 - num2;
     } else if (operator === "*") {
-        let finalNum = multiply(num1, num2);
-        return finalNum;
+        return num1 * num2;
     } else if (operator === "/") {
-        let finalNum = divide(num1, num2);
-        return finalNum;
+        return num1 / num2;
     }
+}
+
+function roundNumber(numInput) {
+    let finalNumber = Math.round((numInput + Number.EPSILON) * 100000) / 100000;
+    return finalNumber;
 }
 
 function updateDisplay(displayNum) {
     const display = document.getElementById("current-num");
-    if (displayNum === "+" || displayNum === "/" ||
-        displayNum === "*" || displayNum === "-") {
-
-        console.log(displayNum);
-        display.textContent = displayNum;
-
-    } else if (typeof (displayNum) === "number") {
+    if (typeof (displayNum) === "number") {
         console.log(displayNum)
         display.textContent = `${displayNum}`;
+    } else if (typeof(displayNum) === "string" && displayNum.includes(".")) {
+        display.textContent = displayNum;
     } else {
         currentNum = parseFloat(displayNum);
         display.textContent = `${currentNum}`;
@@ -53,7 +30,8 @@ function updateDisplay(displayNum) {
 
 
 let firstNumber = null;
-var currentNum = 0;
+let currentNum = 0;
+let secondNumber = null;
 let operatorSelection = null;
 
 let button = document.getElementsByClassName("button");
@@ -61,34 +39,47 @@ let operators = document.getElementsByClassName("operators");
 
 for (let i = 0; i < button.length; i++) {
     button[i].addEventListener("click", () => {
-        for (let i = 0; i < operators.length; i++) {
+        for (let i = 0; i < operators.length - 1; i++) {
             operators[i].style.backgroundColor = "#84369b";
         }
 
         if (button[i].value === "clear") {
             currentNum = 0;
             firstNumber = null;
+            secondNumber = null;
+            operatorSelection = null;
             updateDisplay(currentNum);
         } else if (button[i].classList.contains("operators")) {
             if (button[i].value === "=") {
                 if (firstNumber === null || operatorSelection === null) {
                     return;
                 } else {
-                    console.log(`first num: ${firstNumber}, second num: ${currentNum}, op: ${operatorSelection}`);
-                    currentNum = operate(firstNumber, currentNum, operatorSelection);
+                    firstNumber = parseFloat(firstNumber);
+                    secondNumber = parseFloat(currentNum);
+
+                    console.log(`first num: ${firstNumber}, second num: ${secondNumber}, op: ${operatorSelection}`);
+                    currentNum = roundNumber(operate(firstNumber, secondNumber, operatorSelection));
+                    console.log(currentNum);
                     updateDisplay(currentNum);
 
                 }
             } else {
                 console.log(`button value of operator: ${button[i].value}`);
                 button[i].style.backgroundColor = "#D183E8";
-                firstNumber = currentNum;
+                if (!operatorSelection) {
+                    firstNumber = currentNum;
+                }
                 currentNum = 0;
                 operatorSelection = button[i].value;
-
             }
 
-        } else {
+        } else if (button[i].value === ".") {
+            currentNum += "."
+            updateDisplay(currentNum);
+        } else if (button[i].value === "sign") {
+        
+        } 
+        else {
             console.log(button[i].value);
             currentNum += button[i].value;
             updateDisplay(currentNum);
