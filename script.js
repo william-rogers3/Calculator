@@ -6,21 +6,31 @@ function operate(num1, num2, operator) {
     } else if (operator === "*") {
         return num1 * num2;
     } else if (operator === "/") {
+        if (num2 === 0) {
+            return "Und";
+        }
         return num1 / num2;
     }
 }
 
 function roundNumber(numInput) {
+    if (numInput === "Und") {
+        return "Und";
+    }
     let finalNumber = Math.round((numInput + Number.EPSILON) * 100000) / 100000;
     return finalNumber;
 }
 
 function updateDisplay(displayNum) {
     const display = document.getElementById("current-num");
-    if (typeof (displayNum) === "number") {
+    if (displayNum == "-") {
+        display.textContent = "-";
+    } else if (typeof (displayNum) === "number" && displayNum != NaN) {
         console.log(displayNum)
         display.textContent = `${displayNum}`;
-    } else if (typeof(displayNum) === "string" && displayNum.includes(".")) {
+    } else if (typeof (displayNum) === "string" && displayNum.includes(".")) {
+        display.textContent = displayNum;
+    } else if (displayNum === "Und") {
         display.textContent = displayNum;
     } else {
         currentNum = parseFloat(displayNum);
@@ -29,10 +39,11 @@ function updateDisplay(displayNum) {
 }
 
 
-let firstNumber = null;
+let firstNum = null;
 let currentNum = 0;
-let secondNumber = null;
+let secondNum = null;
 let operatorSelection = null;
+let finalNum = null;
 
 let button = document.getElementsByClassName("button");
 let operators = document.getElementsByClassName("operators");
@@ -45,41 +56,56 @@ for (let i = 0; i < button.length; i++) {
 
         if (button[i].value === "clear") {
             currentNum = 0;
-            firstNumber = null;
-            secondNumber = null;
+            firstNum = null;
+            secondNum = null;
             operatorSelection = null;
             updateDisplay(currentNum);
         } else if (button[i].classList.contains("operators")) {
             if (button[i].value === "=") {
-                if (firstNumber === null || operatorSelection === null) {
+                if (firstNum === null || operatorSelection === null) {
                     return;
                 } else {
-                    firstNumber = parseFloat(firstNumber);
-                    secondNumber = parseFloat(currentNum);
+                    firstNum = parseFloat(firstNum);
+                    secondNum = parseFloat(currentNum);
 
-                    console.log(`first num: ${firstNumber}, second num: ${secondNumber}, op: ${operatorSelection}`);
-                    currentNum = roundNumber(operate(firstNumber, secondNumber, operatorSelection));
-                    console.log(currentNum);
+                    console.log(`first num: ${firstNum}, second num: ${secondNum}, op: ${operatorSelection}`);
+                    currentNum = roundNumber(operate(firstNum, secondNum, operatorSelection));
+                    finalNum = currentNum;
                     updateDisplay(currentNum);
-
+                    firstNum = null;
+                    secondNum = null;
+                    operatorSelection = null;
                 }
             } else {
                 console.log(`button value of operator: ${button[i].value}`);
                 button[i].style.backgroundColor = "#D183E8";
                 if (!operatorSelection) {
-                    firstNumber = currentNum;
+                    firstNum = currentNum;
                 }
+                console.log("first num: " + firstNum);
                 currentNum = 0;
                 operatorSelection = button[i].value;
             }
 
         } else if (button[i].value === ".") {
+            currentNum = currentNum.toString();
+            if (currentNum.includes(".")) {
+                return;
+            }
             currentNum += "."
             updateDisplay(currentNum);
         } else if (button[i].value === "sign") {
-        
-        } 
-        else {
+            if (currentNum == 0) {
+                currentNum = "-";
+                updateDisplay(currentNum);
+            } else if (currentNum === "-") {
+                currentNum = 0;
+                updateDisplay(currentNum);
+            } else {
+                currentNum *= -1;
+                updateDisplay(currentNum);
+            }
+        } else {
             console.log(button[i].value);
             currentNum += button[i].value;
             updateDisplay(currentNum);
