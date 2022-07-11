@@ -23,21 +23,40 @@ function roundNumber(numInput) {
 
 function updateDisplay(displayNum) {
     const display = document.getElementById("current-num");
+    const displayText = display.innerText;
     if (displayNum == "-") {
         display.textContent = "-";
+        fitInDisplay(currentNum)
     } else if (typeof (displayNum) === "number" && displayNum != NaN) {
         console.log(displayNum)
         display.textContent = `${displayNum}`;
+        fitInDisplay(currentNum)
     } else if (typeof (displayNum) === "string" && displayNum.includes(".")) {
         display.textContent = displayNum;
+        fitInDisplay(currentNum)
     } else if (displayNum === "Und") {
         display.textContent = displayNum;
+        fitInDisplay(currentNum)
     } else {
         currentNum = parseFloat(displayNum);
         display.textContent = `${currentNum}`;
+        fitInDisplay(currentNum)
     }
 }
 
+function fitInDisplay(displayInput) {
+    let displayedText = `${displayInput}`;
+    const display = document.getElementById("current-num");
+    const displayText = display.innerText;
+
+    if (displayText.length > 9) {
+        display.textContent = displayText.substring(0, 9);
+    }
+}
+
+
+const display = document.getElementById("current-num");
+const displayText = display.textContent;
 
 let firstNum = null;
 let currentNum = 0;
@@ -53,6 +72,7 @@ for (let i = 0; i < button.length; i++) {
         for (let i = 0; i < operators.length - 1; i++) {
             operators[i].style.backgroundColor = "#84369b";
         }
+
 
         if (button[i].value === "clear") {
             currentNum = 0;
@@ -105,8 +125,14 @@ for (let i = 0; i < button.length; i++) {
                 currentNum *= -1;
                 updateDisplay(currentNum);
             }
+        } else if (button[i].value === "%") {
+            currentNum /= 100;
+            updateDisplay(currentNum);
         } else {
-            console.log(button[i].value);
+            let currentNumString = `${currentNum}`;
+            if (currentNumString.length > 9) {
+                return;
+            } 
             currentNum += button[i].value;
             updateDisplay(currentNum);
         }
