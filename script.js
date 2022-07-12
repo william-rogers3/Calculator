@@ -27,7 +27,6 @@ function updateDisplay(displayNum) {
     if (displayNum == "-") {
         display.textContent = "-";
     } else if (typeof (displayNum) === "number" && displayNum != NaN) {
-        console.log(displayNum)
         display.textContent = `${displayNum}`;
     } else if (typeof (displayNum) === "string" && displayNum.includes(".")) {
         display.textContent = displayNum;
@@ -57,7 +56,6 @@ for (let i = 0; i < button.length; i++) {
             operators[i].style.backgroundColor = "#84369b";
         }
 
-
         if (button[i].value === "clear") {
             currentNum = 0;
             firstNum = null;
@@ -69,6 +67,10 @@ for (let i = 0; i < button.length; i++) {
                 if (firstNum === null || operatorSelection === null) {
                     return;
                 } else {
+                    if (firstNum === "Und") {
+                        updateDisplay(firstNum);
+                        return;
+                    }
                     firstNum = parseFloat(firstNum);
                     secondNum = parseFloat(currentNum);
 
@@ -81,12 +83,10 @@ for (let i = 0; i < button.length; i++) {
                     operatorSelection = null;
                 }
             } else {
-                console.log(`button value of operator: ${button[i].value}`);
                 button[i].style.backgroundColor = "#D183E8";
                 if (!operatorSelection) {
                     firstNum = currentNum;
                 }
-                console.log("first num: " + firstNum);
                 currentNum = 0;
                 operatorSelection = button[i].value;
             }
@@ -111,15 +111,19 @@ for (let i = 0; i < button.length; i++) {
             }
         } else if (button[i].value === "%") {
             currentNum /= 100;
+            currentNum = currentNum.toPrecision(3);
             updateDisplay(currentNum);
         } else {
+            // if (finalNum && firstNum == null) {
+            //     currentNum = 0;
+            //     finalNum = null;
+            // }
             let currentNumString = `${currentNum}`;
             if (currentNumString.length >= 9) {
                 return;
             }
             currentNum += button[i].value;
             updateDisplay(currentNum);
-            console.log(currentNum);
         }
 
     });
