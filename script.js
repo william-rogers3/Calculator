@@ -83,6 +83,18 @@ for (let i = 0; i < button.length; i++) {
                     operatorSelection = null;
                 }
             } else {
+                if (firstNum && operatorSelection && currentNum) {
+                    firstNum = parseFloat(firstNum);
+                    secondNum = parseFloat(currentNum);
+
+                    console.log(`first num: ${firstNum}, second num: ${secondNum}, op: ${operatorSelection}`);
+                    currentNum = roundNumber(operate(firstNum, secondNum, operatorSelection));
+                    finalNum = currentNum;
+                    updateDisplay(currentNum);
+                    firstNum = null;
+                    secondNum = null;
+                    operatorSelection = null;
+                }
                 button[i].style.backgroundColor = "#D183E8";
                 if (!operatorSelection) {
                     firstNum = currentNum;
@@ -114,10 +126,10 @@ for (let i = 0; i < button.length; i++) {
             currentNum = currentNum.toPrecision(3);
             updateDisplay(currentNum);
         } else {
-            // if (finalNum && firstNum == null) {
-            //     currentNum = 0;
-            //     finalNum = null;
-            // }
+            if (finalNum && firstNum == null) {
+                currentNum = 0;
+                finalNum = null;
+            }
             let currentNumString = `${currentNum}`;
             if (currentNumString.length >= 9) {
                 return;
